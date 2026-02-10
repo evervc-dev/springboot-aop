@@ -1,6 +1,7 @@
 package com.evervc.springboot.app.aop.aop;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -22,9 +23,16 @@ public class GreetingAspect {
     public void greetingMethods(){}
 
     @Before("greetingMethods()")
-    public void loggerBifore(JoinPoint joinPoint) {
+    public void loggerBefore(JoinPoint joinPoint) {
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
         logger.info("Antes de [" + method + "] con {" + args + "} como argumentos.");
+    }
+
+    @After("within(com.evervc.springboot.app.aop..*)")
+    public void loggerAfter(JoinPoint joinPoint) {
+        String method = joinPoint.getSignature().getName();
+        String args = Arrays.toString(joinPoint.getArgs());
+        logger.info("Después de [" + method + "] con {" + args + "} como argumentos.");
     }
 }

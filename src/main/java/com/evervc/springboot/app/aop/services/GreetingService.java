@@ -8,4 +8,9 @@ public class GreetingService implements IGreetingService {
     public String sayHello(String name, String phrase) {
         return phrase + name;
     }
+
+    @Override
+    public String sayHelloWithError(String name, String phrase) {
+        throw new RuntimeException("Excepcion generada :(") ;
+    }
 }

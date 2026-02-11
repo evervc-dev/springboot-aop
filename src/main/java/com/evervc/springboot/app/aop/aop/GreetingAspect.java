@@ -1,10 +1,7 @@
 package com.evervc.springboot.app.aop.aop;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -34,5 +31,19 @@ public class GreetingAspect {
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
         logger.info("Después de [" + method + "] con {" + args + "} como argumentos.");
+    }
+
+    @AfterReturning("within(com.evervc.springboot.app.aop..*)")
+    public void loggerAfterRetorning(JoinPoint joinPoint) {
+        String method = joinPoint.getSignature().getName();
+        String args = Arrays.toString(joinPoint.getArgs());
+        logger.info("Después de retornar desde [" + method + "] con {" + args + "} como argumentos.");
+    }
+
+    @AfterThrowing("within(com.evervc.springboot.app.aop..*)")
+    public void loggerAfterThrowing(JoinPoint joinPoint) {
+        String method = joinPoint.getSignature().getName();
+        String args = Arrays.toString(joinPoint.getArgs());
+        logger.error("Después de lanzar la excepcion en [" + method + "] con {" + args + "} como argumentos.");
     }
 }

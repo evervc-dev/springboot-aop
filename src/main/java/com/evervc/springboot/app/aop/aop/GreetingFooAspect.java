@@ -4,7 +4,6 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
@@ -15,14 +14,11 @@ import java.util.Arrays;
 @Order(1)
 @Component
 @Aspect
-public class GreetingFooAspect {
+public class GreetingFooAspect extends GreetingServicePointcuts {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Pointcut("execution(String com.evervc.springboot.app.aop.services.IGreetingService.sayHello(..))")
-    public void greetingMethods(){}
-
-    @Before("greetingMethods()")
+    @Before("greetingFooMethods()")
     public void loggerBefore(JoinPoint joinPoint) {
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
@@ -31,7 +27,7 @@ public class GreetingFooAspect {
 
     // Este método se invoca al final de todos, al tener el valor de la notación @Order en 1
     // es como si envolviera la ejecución de el que tiene el valor 2
-    @After("greetingMethods()")
+    @After("greetingFooMethods()")
     public void loggerAfter(JoinPoint joinPoint) {
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());

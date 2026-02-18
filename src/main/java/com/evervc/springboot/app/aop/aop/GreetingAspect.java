@@ -17,12 +17,7 @@ public class GreetingAspect {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    // Doc: https://docs.spring.io/spring-framework/reference/core/aop/ataspectj/pointcuts.html
-    // https://docs.spring.io/spring-framework/reference/core/aop/ataspectj/advice.html
-    @Pointcut("execution(String com.evervc.springboot.app.aop.services.IGreetingService.sayHello(..))")
-    public void greetingMethods(){}
-
-    @Before("greetingMethods()")
+    @Before("GreetingServicePointcuts.greetingMethods()")
     public void loggerBefore(JoinPoint joinPoint) {
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
@@ -50,7 +45,7 @@ public class GreetingAspect {
         logger.error("Después de lanzar la excepcion en [" + method + "] con {" + args + "} como argumentos.");
     }
 
-    @Around("greetingMethods()")
+    @Around("GreetingServicePointcuts.greetingMethods()")
     public Object loggerAround(ProceedingJoinPoint proceedingJoinPoint) {
         String method = proceedingJoinPoint.getSignature().getName();
         String args = Arrays.toString(proceedingJoinPoint.getArgs());
